@@ -1,0 +1,93 @@
+from django.urls import include, path
+
+from product.api.v1.views import (
+    ProductApiView,
+    ProductCreateApiView,
+    ProductPhotoCreateApiView,
+    ProductPhotoRetrieveApiView,
+    ProductPhotoSupplyRetrieveApiView,
+    ProductRetrieveApiView,
+    ProductRetrieveUpdateApiView,
+    ProductReviewApiView,
+    ProductReviewCreateApiView,
+)
+
+urlpatterns = [
+    path("list/", ProductApiView.as_view(), name="product_list"),
+    path("create/", ProductCreateApiView.as_view(), name="product_create"),
+    path(
+        "<int:article>/",
+        include(
+            [
+                path(
+                    "retrieve/",
+                    ProductRetrieveApiView.as_view(),
+                    name="product_retrieve",
+                ),
+                path(
+                    "update/",
+                    ProductRetrieveUpdateApiView.as_view(),
+                    name="product_update",
+                ),
+                path(
+                    "photo/<int:id>/",
+                    include(
+                        [
+                            path(
+                                "retrieve/",
+                                ProductPhotoRetrieveApiView.as_view(),
+                                name="product_photo_retrieve",
+                            ),
+                            path(
+                                "delete/",
+                                ProductPhotoSupplyRetrieveApiView.as_view(),
+                                name="product_photo_delete",
+                            ),
+                        ]
+                    ),
+                ),
+            ]
+        ),
+    ),
+    path(
+        "review/",
+        include(
+            [
+                path(
+                    "create/",
+                    ProductReviewCreateApiView.as_view(),
+                    name="review_create",
+                ),
+                path(
+                    "<int:article>/",
+                    include(
+                        [
+                            path(
+                                "list/",
+                                ProductReviewApiView.as_view(),
+                                name="review_list",
+                            ),
+                            path(
+                                "update/<int:id>/",
+                                ProductRetrieveUpdateApiView.as_view(),
+                                name="review_update",
+                            ),
+                        ]
+                    ),
+                ),
+            ]
+        ),
+    ),
+    path(
+        "photo/",
+        include(
+            [
+                path(
+                    "create/",
+                    ProductPhotoCreateApiView.as_view(),
+                    name="product_photo_create",
+                ),
+            ]
+        ),
+    ),
+]

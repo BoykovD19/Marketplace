@@ -1,0 +1,8 @@
+[flake8]
+ignore = Q000, D100, D101, D102, D103, D104, D105, D106, D107,
+         D200, D202, D203, D205, D212, D214, D215, C812, D400
+         I001, I004, I003, I005, WPS, DAR101, DAR201, C408, W503, S101, W605,
+         C815, C417, DAR401, RST213, D415, E203
+max-line-length = 120
+docstring-convention=all
+max-complexity=17
